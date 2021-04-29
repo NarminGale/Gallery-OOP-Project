@@ -24,6 +24,9 @@ function Gallery(element) {
 
   // bind functions
   // this.openModal = this.openModal.bind(this)
+  this.closeModal = this.closeModal.bind(this)
+  this.nextImage = this.nextImage.bind(this)
+  this.prevImage = this.prevImage.bind(this)
 
   // container event
   this.container.addEventListener(
@@ -48,6 +51,9 @@ Gallery.prototype.openModal = function (selectedImage, list) {
     })
     .join('')
   this.modal.classList.add('open')
+  this.closeBtn.addEventListener('click', this.closeModal)
+  this.nextBtn.addEventListener('click', this.nextModal)
+  this.prevBtn.addEventListener('click', this.prevModal)
 }
 
 Gallery.prototype.setMainImage = function (selectedImage) {
@@ -57,6 +63,9 @@ Gallery.prototype.setMainImage = function (selectedImage) {
 
 Gallery.prototype.closeModal = function () {
   this.modal.classList.remove('open')
+  this.closeBtn.removeEventListener('click', this.closeModal)
+  this.nextBtn.removeEventListener('click', this.nextModal)
+  this.prevBtn.removeEventListener('click', this.prevModal)
 }
 
 Gallery.prototype.prevImage = function () {}
