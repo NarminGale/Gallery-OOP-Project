@@ -14,6 +14,7 @@ function Gallery(element) {
   // target
   this.modal = getElement('.modal')
   this.modalImg = getElement('.main-img')
+  this.imageName = getElement('.image-name')
   this.modalImages = getElement('.modal-images')
   this.closeBtn = getElement('.close-btn')
   this.nextBtn = getElement('.next-btn')
@@ -29,14 +30,37 @@ function Gallery(element) {
     'click',
     function (e) {
       // self.openModal()
-      this.openModal()
+
+      if (e.target.classList.contains('img')) {
+        this.openModal(e.target, this.list)
+      }
     }.bind(this)
   )
 }
 
-Gallery.prototype.openModal = function () {
+Gallery.prototype.openModal = function (selectedImage, list) {
+  this.setMainImage(selectedImage)
+  this.modalImages.innerHTML = list
+    .map(function (image) {
+      return `<img src="${
+        image.src
+      }" title="${image.title}" data-id = "${image.dataset.id}" class="${selectedImage.dataset.id === image.dataset.id ? 'modal-img selected' : 'modal-img'}" />`
+    })
+    .join('')
   this.modal.classList.add('open')
 }
 
+Gallery.prototype.setMainImage = function (selectedImage) {
+  this.modalImg.src = selectedImage.src
+  this.imageName.textContent = selectedImage.title
+}
+
+Gallery.prototype.closeModal = function () {
+  this.modal.classList.remove('open')
+}
+
+Gallery.prototype.prevImage = function () {}
+
+Gallery.prototype.nextImage = function () {}
 const flower = new Gallery(getElement('.flowers'))
 const home = new Gallery(getElement('.home'))
