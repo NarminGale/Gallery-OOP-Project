@@ -9,6 +9,7 @@ function getElement(selection) {
 }
 
 function Gallery(element) {
+  this.container = element
   this.list = [...element.querySelectorAll('.img')]
   // target
   this.modal = getElement('.modal')
@@ -17,7 +18,24 @@ function Gallery(element) {
   this.closeBtn = getElement('.close-btn')
   this.nextBtn = getElement('.next-btn')
   this.prevBtn = getElement('.prev-btn')
-  console.log(this.modalImages)
+  //  self reference
+  // let self = this
+
+  // bind functions
+  // this.openModal = this.openModal.bind(this)
+
+  // container event
+  this.container.addEventListener(
+    'click',
+    function (e) {
+      // self.openModal()
+      this.openModal()
+    }.bind(this)
+  )
+}
+
+Gallery.prototype.openModal = function () {
+  this.modal.classList.add('open')
 }
 
 const flower = new Gallery(getElement('.flowers'))
